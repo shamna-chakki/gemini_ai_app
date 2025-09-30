@@ -23,7 +23,6 @@ class _AddBlogScreenState extends State<AddBlogScreen> {
   File? _image;
   final picker = ImagePicker();
 
-
   @override
   void dispose() {
     _titleController.dispose();
@@ -207,21 +206,36 @@ class _AddBlogScreenState extends State<AddBlogScreen> {
                       contentPadding: EdgeInsets.all(8),
                     ),
                   ),
-                  SizedBox(height: 20,),
+                  SizedBox(height: 20),
                   SizedBox(
                     height: 50,
-                    child: ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.black87,
-                        foregroundColor: Colors.white,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                      ),
-                      onPressed: () {
-                        _formUploading(context);
-                      },
-                      child: const Text("ADD BLOG"),
+                    width: double.infinity,
+                    child: Consumer<BlogProvider>(
+                      builder: (context,obj,child) {
+                        return ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: Colors.black87,
+                            foregroundColor: Colors.white,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                          ),
+                          onPressed: () {
+                            if(obj.loading){
+                              SizedBox(
+                                width: 20,
+                                height: 20,
+                                child: CircularProgressIndicator(
+                                  strokeWidth: 2,
+                                  color: Colors.white,
+                                ),
+                              );
+                            }
+                            _formUploading(context);
+                          },
+                          child: const Text("ADD BLOG"),
+                        );
+                      }
                     ),
                   ),
                 ],
@@ -232,6 +246,7 @@ class _AddBlogScreenState extends State<AddBlogScreen> {
       ),
     );
   }
+
   Future<void> pickImage(BuildContext context) async {
     final picked = await picker.pickImage(source: ImageSource.gallery);
     if (picked != null) {
@@ -253,16 +268,24 @@ class _AddBlogScreenState extends State<AddBlogScreen> {
 
       // Create BlogModel with only the image (Gemini will generate title and description)
       final blogModel = BlogModel(
-        title: '', // Empty, will be generated
-        description: '', // Empty, will be generated
+        title: _titleController.text, // Empty, will be generated
+        description: _descriptionController.text, // Empty, will be generated
         image: _image,
       );
 
-     final result= await context.read<BlogProvider>().getBlog(blogModel: blogModel);
+
+      final result = await context.read<BlogProvider>().getBlog(
+        blogModel: blogModel,
+      );
+
 
       if (!context.mounted) return;
-      Navigator.push(context, MaterialPageRoute(builder: (context) => BlogDetailScreen(blogModel: result!),));
-
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => BlogDetailScreen(blogModel: result!),
+        ),
+      );
     }
   }
 }

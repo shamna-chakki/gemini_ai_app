@@ -2,6 +2,7 @@ import 'dart:developer';
 import 'dart:io';
 
 import 'package:flutter/foundation.dart';
+import 'package:google_generative_ai/google_generative_ai.dart';
 
 import '../models/blog_model.dart';
 import '../services/gemini_service.dart';
@@ -35,6 +36,7 @@ class BlogProvider extends ChangeNotifier {
     try {
       _loading = true;
       notifyListeners();
+      // _blogModel = await geminiService.generateBlog(blogModel: blogModel!);
 
       blogModel = await geminiService.generateBlog(blogModel: blogModel);
       log('${blogModel?.image?.path}', name: 'Image');
@@ -43,6 +45,8 @@ class BlogProvider extends ChangeNotifier {
         notifyListeners();
       }
       return blogModel;
+    } on GenerativeAIException catch (e) {
+      print('AI Error: ${e.message}');
     } catch (e) {
       _error = e.toString();
       notifyListeners();
@@ -53,3 +57,4 @@ class BlogProvider extends ChangeNotifier {
     }
   }
 }
+

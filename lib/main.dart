@@ -2,13 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:gemini_ai_app/env.dart';
 import 'package:gemini_ai_app/providers/blog_provider.dart';
 import 'package:gemini_ai_app/screens/add_blog_screen.dart';
-import 'package:google_generative_ai/google_generative_ai.dart';
 import 'package:provider/provider.dart';
 
 import 'services/gemini_service.dart';
 
 void main() {
-
   runApp(const MyApp());
 }
 
