@@ -30,39 +30,28 @@ class BlogDetailScreen extends StatelessWidget {
                     width: double.infinity,
                     height: desiredHeight,
                   ),
-                Container(
-                  height: desiredHeight,
-                  width: double.infinity,
-                  alignment: Alignment.bottomLeft,
-                  padding: EdgeInsetsGeometry.only(
-                    bottom: 10,
-                    left: 16,
-                    right: 16,
-                  ),
-                  decoration: BoxDecoration(
-                    gradient: LinearGradient(
-                      colors: [Colors.transparent, Colors.black.withAlpha(60)],
-                      begin: Alignment.topCenter,
-                      end: Alignment.bottomCenter,
+                Positioned.fill(
+                  child: Container(
+                    height: desiredHeight,
+                    width: double.infinity,
+                    alignment: Alignment.bottomLeft,
+                    padding: EdgeInsetsGeometry.only(
+                      bottom: 10,
+                      left: 16,
+                      right: 16,
+                    ),
+                    decoration: BoxDecoration(
+                      gradient: LinearGradient(
+                        colors: [Colors.transparent, Colors.black.withAlpha(60)],
+                        begin: Alignment.topCenter,
+                        end: Alignment.bottomCenter,
+                      ),
                     ),
                   ),
                 ),
 
                 Positioned(
-                  bottom: 10,
-                  left: 16,
-                  right: 16,
-                  child: Text(
-                    blogModel.title,
-                    style: TextStyle(
-                      fontSize: 18,
-                      color: Colors.white,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ),
-                Positioned(
-                  top: 40,
+                  top: MediaQuery.paddingOf(context).top,
                   left: 8,
                   child: InkWell(
                     borderRadius: BorderRadius.circular(50),
@@ -81,11 +70,23 @@ class BlogDetailScreen extends StatelessWidget {
                 ),
               ],
             ),
-            SizedBox(height: 30),
+            SizedBox(height: 8,),
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: 16, ),
+              child: Text(
+                blogModel.title,
+                style: TextStyle(
+                  fontSize: 18,
+                  color: Colors.black,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ),
+            SizedBox(height: 8),
 
             /// Blog Content
             Padding(
-              padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+              padding: EdgeInsets.symmetric(horizontal: 16),
               child: Text(
                 blogModel.description,
                 textAlign: TextAlign.justify,

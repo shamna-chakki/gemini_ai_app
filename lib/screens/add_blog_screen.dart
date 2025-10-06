@@ -108,12 +108,12 @@ class _AddBlogScreenState extends State<AddBlogScreen> {
                   SizedBox(height: 10),
                   TextFormField(
                     controller: _titleController,
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return 'Please enter value';
-                      }
-                      return null;
-                    },
+                    // validator: (value) {
+                    //   if (value == null || value.isEmpty) {
+                    //     return 'Please enter value';
+                    //   }
+                    //   return null;
+                    // },
                     decoration: InputDecoration(
                       hintText: 'Enter Title',
                       hintStyle: TextStyle(fontSize: 14, color: Colors.grey),
@@ -164,12 +164,12 @@ class _AddBlogScreenState extends State<AddBlogScreen> {
                   SizedBox(height: 10),
                   TextFormField(
                     controller: _descriptionController,
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return 'Please enter value';
-                      }
-                      return null;
-                    },
+                    // validator: (value) {
+                    //   if (value == null || value.isEmpty) {
+                    //     return 'Please enter value';
+                    //   }
+                    //   return null;
+                    // },
                     decoration: InputDecoration(
                       hintText: 'Enter Description',
                       hintStyle: TextStyle(fontSize: 14, color: Colors.grey),
@@ -222,18 +222,14 @@ class _AddBlogScreenState extends State<AddBlogScreen> {
                           ),
                           onPressed: () {
                             if(obj.loading){
-                              SizedBox(
-                                width: 20,
-                                height: 20,
-                                child: CircularProgressIndicator(
-                                  strokeWidth: 2,
-                                  color: Colors.white,
-                                ),
-                              );
+                              return;
                             }
                             _formUploading(context);
                           },
-                          child: const Text("ADD BLOG"),
+                          child: obj.loading ? CircularProgressIndicator(
+                            strokeWidth: 2,
+                            color: Colors.white,
+                          ) : const Text("ADD BLOG"),
                         );
                       }
                     ),
